@@ -1,0 +1,129 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Basic Page Info -->
+  <meta charset="utf-8" />
+  <title>Student Managment System</title>
+
+  <!-- Site favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'Templates/vendors/images/apple-touch-icon.png'%}" />
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'Templates/vendors/images/favicon-32x32.png'%}" />
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'Templates/vendors/images/favicon-16x16.png'%}" />
+
+  <!-- Mobile Specific Metas -->
+  <meta width: calc(100% - 300px); float: right; margin-top: 93px; name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" /> 
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="{% static 'Templates/vendors/styles/core.css'%}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'Templates/vendors/styles/icon-font.min.css'%}" />
+  <link width: calc(100% - 300px); float: right; margin-top: 93px; rel="stylesheet" type="text/css"
+    href="{% static 'Templates/src/plugins/jvectormap/jquery-jvectormap-2.0.3.css'%}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'Templates/vendors/styles/style.css'%}" />
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+  </script>
+</head>
+
+<body>
+  <div class="header">
+    <div class="header-left">
+      <div class="menu-icon dw dw-menu"></div>
+      <div class="search-toggle-icon dw dw-search2" data-toggle="header_search"></div>
+     
+    </div>
+    <div class="header-right">
+      <div class="user-info-dropdown">
+        <div class="dropdown d-flex align-items-center">
+          <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+            <span class="user-name">
+              <p style="color:black; margin: 0;">{{user.username}}</p>
+            </span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+            <a href="{% url 'logout' %}">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="left-side-bar">
+    <div class="brand-logo">
+      <a href="index.html">
+      </a>
+      <div class="close-sidebar" data-toggle="left-sidebar-close">
+        <i class="ion-close-round"></i>
+      </div>
+    </div>
+    <div class="menu-block custo    width: calc(100% - 300px);
+      float: right;
+      margin-top: 93px;mscroll">
+      <div class="sidebar-menu">
+        <ul id="accordion-menu">
+          <li class="dropdown">
+            <a href="{% url 'index' %}" class="dropdown-toggle">
+              <span class="micon dw dw-house-1"></span><span class="mtext">Home</span>
+            </a>
+          </li>
+          <li class="dropdown">
+            <a href="javascript:;" class="dropdown-toggle">
+              <span class="micon dw dw-edit2"></span><span class="mtext">Student</span>
+            </a>
+            <ul class="submenu">
+              <li><a href="{% url 'student_list' %}">Manage Student</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="javascript:;" class="dropdown-toggle">
+              <span class="micon dw dw-edit-2"></span><span class="mtext">Course</span>
+            </a>
+            <ul class="submenu">
+              <li><a href="{% url 'course_list' %}">Manage Course</a></li>
+            </ul>
+          </li>
+          <li>
+            <span class="micon dw dw-paper-plane1"></span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="mobile-menu-overlay"></div>
+  </div>
+  <div class="card" style="width: calc(100% - 300px);
+  float: right;
+  margin-top: 93px;">
+    <div class="card-body">
+      {% block content %} {% endblock %}
+    </div>
+  </div>
+  <!-- js -->
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="{% static 'Templates/vendors/scripts/core.js'%}"></script>
+  <script src="{% static 'Templates/vendors/scripts/script.min.js'%}"></script>
+  <script src="{% static 'Templates/vendors/scripts/process.js'%}"></script>
+  <script src="{% static 'Templates/vendors/scripts/layout-settings.js'%}"></script>
+  <script src="{% static 'Templates/src/plugins/jQuery-Knob-master/jquery.knob.min.js'%}"></script>
+  <script src="{% static 'Templates/src/plugins/highcharts-6.0.7/code/highcharts.js'%}"></script>
+  <script src="{% static 'Templates/src/plugins/highcharts-6.0.7/code/highcharts-more.js'%}"></script>
+  <script src="{% static 'Templates/src/plugins/jvectormap/jquery-jvectormap-2.0.3.min.js'%}"></script>
+  <script src="{% static 'Templates/src/plugins/jvectormap/jquery-jvectormap-world-mill-en.js'%}"></script>
+  <script src="{% static 'Templates/vendors/scripts/dashboard2.js'%}"></script>
+
+  {% block script-content %} {% endblock %}
+</body>
+
+</html>

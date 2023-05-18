@@ -1,0 +1,363 @@
+{% extends 'basic.html' %} {% block content %} {% load static %}
+<div class="content-header sty-one">
+  <h1>Dashboard</h1>
+  <ol class="breadcrumb">
+    <li><a href="#">Home</a></li>
+    <li><i class="fa fa-angle-right"></i> Dashboard</li>
+  </ol>
+</div>
+
+<!-- Main content -->
+<div class="content">
+  <!-- Small boxes (Stat box) -->
+  <div class="row">
+    <div class="col-lg-3 col-6">
+      <div class="small-box bg-success">
+        <div class="inner">
+          <h3>{{ total_students }}</h3>
+          <p>Total Students</p>
+        </div>
+        <div class="icon">
+          <i class="fas fa-book"></i>
+        </div>
+      </div>
+    </div>
+    
+    <!-- ./col -->
+    <div class="col-lg-3 col-6">
+      <div class="small-box bg-warning">
+        <div class="inner">
+          <h3>{{ total_courses }}</h3>
+          <p>Total Course</p>
+        </div>
+        <div class="icon">
+          <i class="fas fa-book"></i> <!-- Assuming you want to display a book icon -->
+        </div>
+      </div>
+    </div>
+    
+    <!-- ./col -->
+    <!-- ./col -->
+
+  </div>
+  <!-- /.row -->
+  <!-- Main row -->
+  <div class="row">
+    <div class="col-lg-5 col-xlg-3">
+      <div class="info-box">
+        <div class="d-flex flex-wrap">
+        </div>
+        <div class="m-t-2">
+          <canvas id="myChart" height="210"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-5 col-xlg-3">
+      <div class="info-box">
+        <div class="d-flex flex-wrap">
+          <div>
+          </div>
+        </div>
+        <div class="m-t-2">
+          <canvas id="donut" width="600" height="300"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-5 col-xlg-3">
+      <div class="info-box">
+        <div class="d-flex flex-wrap">
+          <div>
+          </div>
+        </div>
+        <div class="m-t-2">
+          <canvas id="scatterChart" width="600" height="300"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-5 col-xlg-3">
+      <div class="info-box">
+        <div class="d-flex flex-wrap">
+          <div>
+          </div>
+        </div>
+        <div class="m-t-2">
+          <canvas id="polarAreaChart" width="600" height="300"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-7">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-4">
+      <div>
+        <!-- Widget: user widget style 1 -->
+        <div class="box box-widget widget-user-2">
+        </div>
+      </div>
+      <!-- /.widget-user -->
+    </div>
+    <div class="m-t-3">
+      <!-- Widget: user widget style 1 -->
+      <div class="box box-widget widget-user">
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+<div class="col-lg-4">
+
+
+</div>
+</div>
+</div>
+<!-- /.content -->
+<!-- dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.0/chart.min.js"></script>
+{% comment %} mychart {% endcomment %}
+<script>
+  const ctx = document.getElementById('myChart').getContext('2d');
+  const myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Students ', 'Courses'],
+      datasets: [{
+        label: 'Total Amount',
+        data: ['{{total_students}}', '{{total_courses}}'],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.8)',
+          '#00a65a ',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          '#00a65a ',
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      plugins: {
+        title: {
+          display: true,
+          text: 'Total Students and Courses',
+          font: {
+            size: 24,
+            weight: 'bold',
+            family: 'Arial'
+          }
+        },
+        legend: {
+          labels: {
+            font: {
+              size: 14,
+              family: 'Arial'
+            }
+          }
+        }
+      },
+      animation: {
+        duration: 2000,
+        easing: 'easeOutQuart'
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            font: {
+              size: 14,
+              family: 'Arial'
+            }
+          }
+        },
+        x: {
+          ticks: {
+            font: {
+              size: 14,
+              family: 'Arial'
+            }
+          }
+        }
+      }
+    }
+  });
+</script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+
+{% comment %} donut {% endcomment %}
+<script>
+  let donut = document.getElementById('donut').getContext('2d');
+
+  // Global Options
+  Chart.defaults.global.defaultFontFamily = 'Lato';
+  Chart.defaults.global.defaultFontSize = 18;
+  Chart.defaults.global.defaultFontColor = '#777';
+
+  let massPopChart = new Chart(donut, {
+    type: 'doughnut',
+    data: {
+      labels: ['STUDENT', 'COURSES'],
+      datasets: [{
+        label: 'TOTAL',
+        data: ['{{total_students}}', '{{total_courses}}'],
+        backgroundColor: [
+          'rgba(54, 162, 235, 0.8)',
+          'rgba(75, 192, 192, 0.8)'
+        ],
+        borderWidth: 1,
+        borderColor: '#777',
+        hoverBorderWidth: 3,
+        hoverBorderColor: '#000'
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'Total Students and Courses',
+        font: {
+          size: 24,
+            weight: 'bold',
+            family: 'Arial'
+        }
+      },
+      legend: {
+        display: true,
+        position: 'right',
+        labels: {
+          fontColor: '#000'
+        }
+      },
+      layout: {
+        padding: {
+          left: 50,
+          right: 0,
+          bottom: 0,
+          top: 0
+        }
+      },
+      tooltips: {
+        enabled: true
+      }
+    }
+  });
+  
+  
+</script>
+
+
+
+{% comment %} scatteredChart {% endcomment %}
+<script>
+  let scatterChart = new Chart(document.getElementById('scatterChart'), {
+    type: 'scatter',
+    data: {
+      datasets: [{
+        label: 'Scatter Dataset',
+        data: [
+          { x: 10, y: 20 },
+          { x: 15, y: 25 },
+          { x: 20, y: 30 },
+          { x: 25, y: 35 },
+          { x: 30, y: 40 },
+          { x: 35, y: 45 }
+        ],
+        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1,
+        pointRadius: 5,
+        pointBackgroundColor: 'rgba(54, 162, 235, 1)',
+        pointBorderColor: '#fff',
+        pointHoverRadius: 7,
+        pointHoverBackgroundColor: 'rgba(54, 162, 235, 1)',
+        pointHoverBorderColor: '#fff'
+      }]
+    },
+    options: {
+      scales: {
+        x: {
+          type: 'linear',
+          position: 'bottom'
+        },
+        y: {
+          type: 'linear',
+          position: 'left'
+        }
+      },
+      title: {
+        display: true,
+        text: 'Total Students and Courses',
+        font: {
+          size: 24,
+          weight: 'bold',
+          family: 'Arial'
+        },
+        color: '#333'
+      }
+    }
+  });
+</script> 
+
+
+{% comment %} polarchart  {% endcomment %}
+<script>
+  let polarAreaChart = document.getElementById('polarAreaChart').getContext('2d');
+
+  // Global Options
+  Chart.defaults.global.defaultFontFamily = 'Lato';
+  Chart.defaults.global.defaultFontSize = 18;
+  Chart.defaults.global.defaultFontColor = '#777';
+
+  let polarAreaData = {
+    labels: ['STUDENT', 'COURSES'],
+    datasets: [{
+      label: 'TOTAL',
+      data: ['{{total_students}}', '{{total_courses}}'],
+      backgroundColor: [
+        'rgba(255, 179, 71, 0.3)',
+        'rgba(153, 102, 204, 0.3)'
+      ],
+      borderColor: [
+        '#FFB347',
+        '#9966CC'
+      ],
+      borderWidth: 2,
+    }]
+  };
+
+  let polarAreaOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'bottom',
+      }
+    },
+    title: {
+      display: true,
+      text: 'Total Students and Courses',
+      font: {
+        size: 24,
+        weight: 'bold',
+        family: 'Arial',
+        color: '#333'
+      },
+      padding: 20
+    }
+  };
+  
+  let polarAreaChartInstance = new Chart(polarAreaChart, {
+    type: 'polarArea',
+    data: polarAreaData,
+    options: polarAreaOptions
+  });
+</script>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.0/chart.min.js"></script>
+
+{% endblock %}

@@ -1,0 +1,230 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block content %}
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+          Add Course
+        </button>
+      </div>
+      <div class="col">
+        <div class="d-flex justify-content-end">
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" name="q" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <form class="form-inline">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Add Course<h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+            </div>
+            <div class="modal-body">
+              <form class="form-inline">
+                {% csrf_token %}
+                <div class="mb-3">
+                  <label>Course Name</label>
+                  <input type="text" id="coursename" class="form-control" required="required" />
+                </div>
+                <div class="mb-3">
+                  <label>Code</label>
+                  <input type="text" id="code" class="form-control" required="required" />
+                </div>
+                <div class="mb-3">
+                  <label>Description</label>
+                  <input type="textfield" id="description" class="form-control" required="required" />
+                </div>
+                <div class="mb-3">
+                  <button type="submit" id='create' class="btn btn-primary">Submit</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+<div id="listcourse">
+  <div class="table-responsive">
+
+    <table class="table table-hover">
+      <thead class="thead" style="background-color: #031e23">
+        <tr class="style" style="color: white">
+          <th scope="col">Id</th>
+          <th scope="col">Course Name</th>
+          <th scope="col">Code</th>
+          <th scope="col">Description</th>
+          <th scope="col">Active</th>
+        </tr>
+      </thead>
+      <tbody style="background-color: #d3d3d3"></tbody>
+      <tbody>
+        {% csrf_token %}
+        {% for course in courses %}
+        <tr>
+          <td>{{ forloop.counter}}</td>
+          <td>{{ course.coursename }}</td>
+          <td>{{ course.code }}</td>
+          <td>{{ course.description }}</td>
+          <td>
+            <button type="button" class="btn btn-danger coursedelete" data-id="{{ course.id }}"
+              data-csrfmiddlewaretoken="{{ csrf_token }}">Delete</button>
+          </td>
+        </tr>
+        <div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Course<h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+              </div>
+              <div class="modal-body">
+                <form method="post" action="{% url 'course_update' course.id %}" method="GET">
+                  {% csrf_token %}
+                  <div class="mb-3">
+                    <label>Course Name</label>
+                    <input type="text" id="coursename" class="form-control" required="required" />
+                  </div>
+                  <div class="mb-3">
+                    <label>Code</label>
+                    <input type="text" id="code" class="form-control" required="required" />
+                  </div>
+                  <div class="mb-3">
+                    <label>Description</label>
+                    <input type="textfield" id="description" class="form-control" required="required" />
+                  </div>
+                  <div class="mb-3">
+                    <button type="submit" id='update' class="btn btn-primary">Save</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+  </div>
+  </tbody>
+  </table>
+  <nav aria-label="Page navigation example">
+    <ul class="pagination" style="margin-right: 220px;">
+      {% if courses.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="course?page={{ courses.previous_page_number }}" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      {% endif %}
+      {% for n in totalPagelist %}
+      <li class="page-item"><a class="page-link" href="course?page={{ n }}">{{ n }}</a></li>
+      {% endfor %}
+      {% if courses.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="course?page={{ courses.next_page_number }}" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
+
+  <style>
+    .pagination {
+      display: flex;
+      justify-content: center;
+    }
+
+    .pagination .page-item {
+      display: inline-block;
+    }
+
+    .pagination .page-link {
+      padding: 0.5rem 0.75rem;
+      margin: 0 2px;
+      color: #000;
+      background-color: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 0.25rem;
+    }
+
+    .pagination .page-link:hover {
+      background-color: #e9ecef;
+    }
+
+    .pagination .page-item.active .page-link {
+      background-color: #007bff;
+      color: #fff;
+      border-color: #007bff;
+    }
+  </style>
+</div>
+</div>
+
+{% endblock %}
+
+{% block script-content %}
+<script>
+  function deleteCourse(id, csrfToken) {
+    swal({
+      title: "Delete Course",
+      text: "Are you sure you want to delete this course?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+      .then((willDelete) => {
+        if (willDelete) {
+          $.ajax({
+            url: '/studentmgnt/course/' + id + '/delete/',
+            type: 'DELETE',
+            beforeSend: function (xhr) {
+              xhr.setRequestHeader('X-CSRFToken', csrfToken);
+            },
+            success: function () {
+              swal("Course deleted", {
+                icon: "success",
+              })
+                .then(() => {
+                  window.location.reload(); // Refresh the page after deletion
+                });
+            },
+            error: function (xhr, status, error) {
+              swal("Error occurred while deleting the course", {
+                icon: "error",
+              });
+              console.log('Error:', error);
+            }
+          });
+        } else {
+          swal("Course deletion cancelled");
+        }
+      });
+  }
+
+  $(document).on('click', '.coursedelete', function () {
+    var id = $(this).data('id');
+    var csrfToken = $(this).data('csrfmiddlewaretoken');
+    deleteCourse(id, csrfToken);
+  });
+</script>
+
+
+
+
+<script src="{% static 'js/course.js' %}">
+</script>
+{% endblock %}

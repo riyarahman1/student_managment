@@ -1,0 +1,34 @@
+
+<div class="table-responsive">
+ 
+  <table
+    class="table table-hover"
+    style="margin-left: 337px;margin-top: 224px;max-width: 71%;"
+  >
+    <thead class="thead" style="background-color: #031e23">
+      <tr class="style" style="color: white">
+        <th scope="col">Id</th>
+        <th scope="col">Student Name</th>
+        <th scope="col">Student Email</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Address</th>
+        <th scope="col">Created_at</th>
+        <th scope="col">Active</th>
+      </tr>
+    </thead>
+    <tbody style="background-color: #d3d3d3"></tbody>
+    <tbody>
+      {% csrf_token %}
+      {% for student in students %}
+      <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ student.studentname }}</td>
+        <td>{{ student.studentemail }}</td>
+        <td>{{ student.phone }}</td>
+        <td>{{ student.address }}</td>
+        <td>{{ student.created_at }}</td>
+        {% endfor%}
+      </tr>
+    </tbody>
+  </table>
+</div>

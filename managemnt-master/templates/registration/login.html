@@ -1,0 +1,158 @@
+{% load static %}
+{% load crispy_forms_filters %}
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- Basic Page Info -->
+	<meta charset="utf-8">
+	<title>Student Managment System</title>
+	{% load static %}
+	<!DOCTYPE html>
+	<html>
+
+	<head>
+		<!-- Basic Page Info -->
+		<meta charset="utf-8">
+		<title>Student Managment System</title>
+
+		<!-- Site favicon -->
+		<link rel="apple-touch-icon" sizes="180x180" href="{% static 'Templates/vendors/images/apple-touch-icon.png'%}">
+		<link rel="icon" type="image/png" sizes="32x32" href="{% static 'Templates/vendors/images/favicon-32x32.png'%}">
+		<link rel="icon" type="image/png" sizes="16x16" href="{% static 'Templates/vendors/images/favicon-16x16.png'%}">
+
+		<!-- Mobile Specific Metas -->
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<!-- Google Font -->
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+			rel="stylesheet">
+		<!-- CSS -->
+		<link rel="stylesheet" type="text/css" href="{% static 'Templates/vendors/styles/core.css'%}">
+		<link rel="stylesheet" type="text/css" href="{% static 'Templates/vendors/styles/icon-font.min.css'%}">
+		<link rel="stylesheet" type="text/css" href="{% static 'Templates/vendors/styles/style.css'%}">
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag() { dataLayer.push(arguments); }
+			gtag('js', new Date());
+
+			gtag('config', 'UA-119386393-1');
+		</script>
+	</head>
+	<style>
+		.input-group {
+			position: relative;
+		}
+
+		.input-group img {
+			position: absolute;
+			width: 30px;
+			right: 5px;
+			top: 50%;
+			transform: translate(0, -50%);
+			cursor: pointer;
+		}
+	</style>
+
+<body class="login-page">
+	<div class="login-header box-shadow">
+		<div class="container-fluid d-flex justify-content-between align-items-center">
+			<div class="brand-logo">
+				<a href="login.html">
+				</a>
+			</div>
+			<div class="login-menu">
+				<ul>
+					<li><a href="{% url 'signup' %}">Register</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="login-wrap d-flex align-items-center flex-wrap justify-content-center">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-md-6 col-lg-7">
+					<img src="{% static 'Templates/vendors/images/login-page-img.png'%}" alt="">
+				</div>
+				<div class="col-md-6 col-lg-5">
+					<div class="login-box bg-white box-shadow border-radius-10">
+						<div class="login-title">
+							<h2 class="text-center text-primary">Login To Student Managment</h2>
+						</div>
+						<form method="post">
+							<div class="container">
+								<div class="col-md-12">
+									<form method="POST" action="">
+										{% csrf_token %}
+										<div class="form-group">
+											{% if user.is_authenticated %}
+											<label for="id_username">Username:</label>
+											<input type="text" name="username" class="form-control" id="id_username"
+												required>
+										</div>
+										<div class="form-group">
+											<label for="id_password">Password:</label>
+											<div class="input-group">
+												<input type="password" name="password" class="form-control"
+													id="id_password" required>
+												<img src="{% static 'images.png' %}" id="eyeicon">
+											</div>
+										</div>
+										<div class="form-group d-flex align-items-center">
+											<button type="submit" class="btn btn-primary">Login</button>
+										</div>
+										{% else %}
+										<label for="id_username">Username:</label>
+										<input type="text" name="username" class="form-control" id="id_username"
+											required>
+								</div>
+								<div class="form-group">
+									<label for="id_password">Password:</label>
+									<div class="input-group">
+										<input type="password" name="password" class="form-control" id="id_password"
+											required>
+										<img src="{% static 'images.png' %}" id="eyeicon">
+									</div>
+								</div>
+								<div class="form-group d-flex align-items-center">
+									<button type="submit" class="btn btn-primary">Login</button>
+								</div>
+								{% endif %}
+						</form>
+
+					</div>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	</div>
+	</div>
+	<script>
+		let eyeicon = document.getElementById("eyeicon");
+		let password = document.getElementById("id_password");
+		let isPasswordVisible = false;
+		let storedPassword = '';
+
+		eyeicon.onclick = function () {
+			isPasswordVisible = !isPasswordVisible;
+
+			if (isPasswordVisible) {
+				storedPassword = password.value;
+				password.type = "text";
+			} else {
+				password.type = "password";
+				password.value = storedPassword;
+			}
+		}
+	</script>
+	<!-- js -->
+	<script src="{% static 'Templates/vendors/scripts/core.js'%}"></script>
+	<script src="{% static 'Templates/vendors/scripts/script.min.js'%}"></script>
+	<script src="{% static 'Templates/vendors/scripts/process.js'%}"></script>
+	<script src="{% static 'Templates/vendors/scripts/layout-settings.js'%}"></script>
+</body>
+
+</html>
